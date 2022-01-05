@@ -18,6 +18,17 @@ services:
     ports:
      - 8761:8761
 
+  flight:
+    image: springcommunity/flight
+    container_name: flight
+    mem_limit: 512M
+    depends_on:
+     - config-server
+     - discovery-server
+    entrypoint: ["./dockerize","-wait=tcp://discovery-server:8761","-timeout=60s","--","java", "org.springframework.boot.loader.JarLauncher"]
+    ports:
+    - 8084:8084
+
   customers-service:
     image: springcommunity/spring-petclinic-customers-service
     container_name: customers-service
