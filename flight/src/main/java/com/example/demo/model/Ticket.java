@@ -1,7 +1,6 @@
 package com.example.demo.model;
 
 import java.util.ArrayList;
-import java.util.Date;
 import javax.persistence.*;
 
 @Entity
@@ -12,26 +11,9 @@ public class Ticket {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 	
-	@Column(name = "start")
-	private Date start;
-	
-	@Column(name = "end")
-	private Date end;
-	
-	@Column(name = "from")
-	private String from;
-	
-	@Column(name = "to")
-	private String to;
-	
-	@Column(name = "type")
-	private String type;
-	
-	@Column(name = "airline")
-	private String airline;
-	
-	@Column(name = "price")
-	private Double price;
+	@ManyToOne
+	@JoinColumn(name="flight_id")
+	private Flight flight;
 	
 	@Column(name = "name")
 	private String name;
@@ -48,68 +30,32 @@ public class Ticket {
 	@Column(name = "pnr")
 	private Integer pnr;
 
+	public Ticket(Integer id, Flight flight, String name, String emailId, Integer numSeats,
+			ArrayList<Passenger> passengers, Integer pnr) {
+		super();
+		this.id = id;
+		this.flight = flight;
+		this.name = name;
+		this.emailId = emailId;
+		this.numSeats = numSeats;
+		this.passengers = passengers;
+		this.pnr = pnr;
+	}
+
 	public Integer getId() {
 		return id;
 	}
-	
+
 	public void setId(Integer id) {
 		this.id = id;
 	}
-
-	public Date getStart() {
-		return start;
+	
+	public Flight getFlight() {
+		return flight;
 	}
 
-	public void setStart(Date start) {
-		this.start = start;
-	}
-
-	public Date getEnd() {
-		return end;
-	}
-
-	public void setEnd(Date end) {
-		this.end = end;
-	}
-
-	public String getFrom() {
-		return from;
-	}
-
-	public void setFrom(String from) {
-		this.from = from;
-	}
-
-	public String getTo() {
-		return to;
-	}
-
-	public void setTo(String to) {
-		this.to = to;
-	}
-
-	public String getType() {
-		return type;
-	}
-
-	public void setType(String type) {
-		this.type = type;
-	}
-
-	public String getAirline() {
-		return airline;
-	}
-
-	public void setAirline(String airline) {
-		this.airline = airline;
-	}
-
-	public Double getPrice() {
-		return price;
-	}
-
-	public void setPrice(Double price) {
-		this.price = price;
+	public void setFlight(Flight flight) {
+		this.flight = flight;
 	}
 
 	public String getName() {
@@ -154,8 +100,8 @@ public class Ticket {
 
 	@Override
 	public String toString() {
-		return "Ticket [id=" + id + ", start=" + start + ", end=" + end + ", from=" + from + ", to=" + to + ", type="
-				+ type + ", airline=" + airline + ", price=" + price + ", name=" + name + ", emailId=" + emailId
-				+ ", numSeats=" + numSeats + ", passengers=" + passengers + ", pnr=" + pnr + "]";
+		return "Ticket [id=" + id + ", flight=" + flight + ", name=" + name + ", emailId=" + emailId + ", numSeats="
+				+ numSeats + ", passengers=" + passengers + ", pnr=" + pnr + "]";
 	}
+
 }
